@@ -1,0 +1,14 @@
+# 3명이 다른 에디터를 쓰면 공백/개행만 다른 대량 diff가 생겨 진짜 변경을 못 보게 됩니다.
+# 합병 전에 팀 전체가 같은 설정을 쓰는 것이 가장 중요합니다.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+trim_trailing_whitespace = false

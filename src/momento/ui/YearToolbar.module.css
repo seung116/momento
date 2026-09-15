@@ -1,0 +1,74 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.yearButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.iconButton,
+.viewToggle {
+  height: 34px;
+  border: 1px solid var(--momento-hairline);
+  background: transparent;
+  border-radius: 8px;
+  color: #353130;
+  box-shadow: 0 2px 4px rgba(26, 23, 22, 0.04);
+  flex: 0 0 auto;
+}
+
+.iconButton {
+  position: relative;
+  width: 34px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+
+/* 시각적 크기는 34px로 유지하고 터치 영역만 44px로 넓힙니다. */
+.iconButton::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+}
+
+.viewToggle {
+  display: flex;
+  overflow: hidden;
+}
+
+.viewToggle button {
+  width: 34px;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+
+.viewToggle button:last-child svg {
+  transform: rotate(90deg);
+}
+
+/* 위 `.viewToggle button`(0,1,1)을 이기려면 자손 형태가 필요합니다. (0,1,0 단독이면 무시됨) */
+.viewToggle .toggleSelected {
+  background: #d2d2d4;
+}

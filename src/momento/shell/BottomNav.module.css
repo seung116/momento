@@ -1,0 +1,41 @@
+.nav {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  /* iOS 홈 인디케이터에 버튼이 가리지 않도록 */
+  height: calc(var(--momento-nav-height) + var(--momento-safe-bottom));
+  padding-bottom: var(--momento-safe-bottom);
+  background: var(--momento-surface);
+  border-top: 1px solid rgba(26, 23, 22, 0.08);
+}
+
+.item {
+  /* 좁은 기기에서 5개 x 65px = 325px 가 넘칠 수 있으므로 shrink 허용 */
+  flex: 0 1 65px;
+  min-width: 0;
+  height: 58px;
+  border: 0;
+  background: transparent;
+  color: var(--momento-faint);
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.item span {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.active {
+  color: var(--momento-primary-strong);
+  font-weight: 600;
+}

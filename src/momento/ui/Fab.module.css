@@ -1,0 +1,20 @@
+/*
+  예전 코드는 position:fixed + left:calc(50% + 126px) 였는데
+  320px 화면에서 좌측 286px + 폭 52px = 338px 로 화면을 넘겼습니다.
+  셸 프레임 기준 absolute + right 로 두면 어떤 폭에서도 여백이 유지됩니다.
+*/
+.fab {
+  position: absolute;
+  z-index: 6;
+  right: var(--momento-gutter);
+  bottom: calc(var(--momento-nav-height) + 16px + var(--momento-safe-bottom));
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--momento-primary);
+  box-shadow: 0 6px 18px rgba(110, 93, 181, 0.3);
+}

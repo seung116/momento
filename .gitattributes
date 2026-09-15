@@ -1,0 +1,5 @@
+# 개행 문자 차이로 인한 가짜 충돌을 막습니다. (Windows / macOS 혼용 팀 필수)
+* text=auto eol=lf
+
+# 자동 생성 파일. 합병 시 diff를 접어서 보여주고, 충돌 나면 재생성하세요.
+package-lock.json linguist-generated=true

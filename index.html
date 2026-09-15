@@ -1,1 +1,47 @@
-<div id="root"></div><script type="module" src="/src/main.jsx"></script>
+<!doctype html>
+<html lang="ko">
+  <head>
+    <!--
+      주의: 이 파일의 주석에 HTML 태그를 리터럴로 쓰지 마세요.
+      Vite dev 서버는 head 태그 문자열을 찾아 클라이언트 스크립트를 주입하는데,
+      주석 안에 같은 문자열이 있으면 주석 내부에 주입되어 스크립트가 실행되지 않고
+      화면이 완전히 비어 버립니다. (프로덕션 빌드는 정상이라 발견이 늦습니다)
+
+      합병 시: 호스트 앱은 자기 index.html을 씁니다.
+      아래 항목 3개는 반드시 호스트 index.html로 옮기세요. 빠지면 모바일이 다시 깨집니다.
+        1. viewport meta   없으면 모바일이 980px 가상 뷰포트로 렌더 후 축소됩니다 (가장 치명적)
+        2. charset meta    한글 깨짐 방지
+        3. Pretendard 스타일시트 2줄   없으면 시스템 폰트로 폴백되어 디자인이 달라 보입니다
+      나머지(theme-color, description 등)는 호스트 정책에 맞추면 됩니다.
+      자세한 내용은 README의 "index.html에서 반드시 옮겨야 하는 것" 참고.
+    -->
+    <meta charset="UTF-8" />
+
+    <!--
+      viewport-fit=cover                 : 노치/홈 인디케이터 영역까지 채우고 env(safe-area-inset-*)로 보정
+      interactive-widget=resizes-content : 모바일 키보드가 올라올 때 레이아웃 뷰포트를 줄여 하단 시트가 가려지지 않게 함
+      확대 차단(maximum-scale, user-scalable=no)은 접근성 때문에 넣지 않았습니다.
+    -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"
+    />
+    <meta name="theme-color" content="#f6f7fa" />
+    <meta name="color-scheme" content="light" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="description" content="친구들과 타임캡슐을 봉인하고 추억을 아카이브하는 모바일 웹 앱" />
+    <title>Momento</title>
+
+    <!-- 폰트는 CSS @import 대신 스타일시트 링크로: @import는 렌더 차단 체인을 만들어 모바일에서 특히 느립니다. -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>이 앱을 보려면 JavaScript를 켜주세요.</noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

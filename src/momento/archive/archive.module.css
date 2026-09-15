@@ -1,0 +1,73 @@
+.greeting {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.greeting strong {
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.greeting span {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--momento-surface);
+  border-radius: 16px;
+  padding: 15px var(--momento-card-pad);
+  min-height: 112px;
+}
+
+/* 제목이 길어도 작성자 이름을 밀어내거나 세로로 쪼개지 않도록 */
+.card > div {
+  min-width: 0;
+}
+
+.card h3 {
+  font-size: 16px;
+  line-height: 1.2;
+  margin: 0 0 4px;
+  /* 한글은 단어 중간에서 끊지 않고, 아주 긴 영문/URL은 강제로 줄바꿈 */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.card small {
+  font-size: 13px;
+  color: var(--momento-muted);
+}
+
+.elapsed {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--momento-faint);
+  background: rgba(26, 23, 22, 0.04);
+  margin-bottom: 8px;
+}
+
+.author {
+  flex: 0 0 auto;
+  align-self: flex-end;
+  color: var(--momento-faint);
+  font-size: 13px;
+  font-style: normal;
+  white-space: nowrap;
+}
+
+@media (max-height: 700px) {
+  .greeting {
+    margin-bottom: 14px;
+  }
+}

@@ -1,0 +1,93 @@
+/*
+  ── 공통 바텀시트 ───────────────────────────────────────────────
+  셸 프레임 기준 absolute 라 데스크톱 카드 밖으로 새지 않고 둥근 모서리에 맞춰 잘립니다.
+  (fixed 로 두면 카드에서 떨어져 뷰포트 전체를 덮습니다)
+
+  기본값은 Figma의 BottomSheet 컴포넌트 값입니다.
+  다른 값이 필요한 화면은 아래 커스텀 프로퍼티만 덮으면 됩니다.
+  기본값 선언을 :where() 로 감싸 명시도 0 으로 두었기 때문에
+  소비자 쪽 모듈 클래스가 CSS 번들 순서와 무관하게 항상 이깁니다.
+  ──────────────────────────────────────────────────────────────── */
+
+:where(.sheet) {
+  --sheet-radius: 24px;
+  --sheet-shadow: 0 8px 24px rgba(26, 23, 22, 0.1);
+  --sheet-handle-width: 36px;
+  --sheet-handle-height: 4px;
+  --sheet-handle-color: rgba(26, 23, 22, 0.16);
+  --sheet-handle-gap: 16px;
+  --sheet-max-height: 100%;
+}
+
+.backdrop {
+  position: absolute;
+  z-index: 20;
+  inset: 0;
+  background: rgba(26, 23, 22, 0.35);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.sheet {
+  width: 100%;
+  /* 292px 고정이 아니라 내용 기반 높이 + 상한. 연도 목록이 늘어나도 프레임을 넘지 않습니다. */
+  max-height: var(--sheet-max-height);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: #fff;
+  border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+  box-shadow: var(--sheet-shadow);
+  padding: 10px var(--momento-gutter) calc(24px + var(--momento-safe-bottom));
+  transform: translateY(100%);
+  transition: transform 220ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* .entered 는 backdrop 에 붙습니다. (0,2,0) > .sheet (0,1,0) 이라 확실히 이깁니다. */
+.entered {
+  opacity: 1;
+}
+
+.entered .sheet {
+  transform: translateY(0);
+}
+
+.handle {
+  width: var(--sheet-handle-width);
+  height: var(--sheet-handle-height);
+  background: var(--sheet-handle-color);
+  border-radius: 999px;
+  margin: 0 auto var(--sheet-handle-gap);
+  /* 핸들을 눌러도 닫히도록 버튼으로 만들되 시각적으로는 막대만 보이게 합니다. */
+  border: 0;
+  padding: 0;
+  display: block;
+}
+
+/*
+  핸들 터치 영역. 막대 자체는 4px 라 그대로는 누르기 어려워 위아래로 14px 씩 넓힙니다.
+  음수 margin 으로 막대의 시각적 위치와 아래 간격은 그대로 유지합니다.
+    실제 간격 = 14px(padding) + (--sheet-handle-gap - 14px) = --sheet-handle-gap
+  폭을 100px 로 제한한 이유: 전체 폭이면 제목 위 빈 영역을 눌러도 닫혀 오탭이 잦습니다.
+*/
+.handleHit {
+  display: block;
+  width: 100px;
+  border: 0;
+  background: transparent;
+  padding: 14px 0;
+  margin: -14px auto calc(var(--sheet-handle-gap) - 14px);
+}
+
+.handleHit .handle {
+  margin: 0 auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .sheet {
+    transition: none;
+  }
+}

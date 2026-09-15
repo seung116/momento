@@ -1,0 +1,92 @@
+/*
+  ── momento 스코프 베이스 ────────────────────────────────────────
+  이 파일은 전역으로 로드되지만 "모든 규칙이 .momento-root 하위로만 적용"됩니다.
+  합병 시 호스트 앱이나 다른 팀원의 스타일을 건드리지 않기 위한 격리 장치입니다.
+
+  규칙
+    1. 여기에 요소 셀렉터(body, button, * 등)를 단독으로 쓰지 마세요.
+       반드시 .momento-root 를 앞에 붙입니다.
+    2. 커스텀 프로퍼티는 --momento- 프리픽스를 씁니다.
+       CSS Modules는 커스텀 프로퍼티를 스코프하지 않으므로 프리픽스가 유일한 방어선입니다.
+    3. 컴포넌트 스타일은 전부 *.module.css 로 작성합니다. (클래스명 충돌 방지)
+
+  box-sizing / button 리셋을 여기에 둔 이유:
+  호스트 앱에 리셋이 없어도 이 UI가 깨지지 않아야 하기 때문입니다.
+  ──────────────────────────────────────────────────────────────── */
+
+.momento-root {
+  /* 디자인 토큰 */
+  --momento-primary: #8273c4;
+  --momento-primary-strong: #6e5db5;
+  --momento-surface: #fff;
+  --momento-shell: #f6f7fa;
+  --momento-page: #e8e9ed;
+  --momento-ink: #1a1716;
+  --momento-muted: rgba(26, 23, 22, 0.55);
+  --momento-faint: rgba(26, 23, 22, 0.38);
+  --momento-hairline: rgba(26, 23, 22, 0.16);
+
+  /*
+    좌우 여백: 기준 393px에서 정확히 20px (20 / 393 = 5.089vw).
+    좁아지면 14px까지 줄고, 394px 이상에서는 20px에서 멈춰 늘어난 폭을 본문이 가져갑니다.
+  */
+  --momento-gutter: clamp(14px, 5.089vw, 20px);
+  --momento-card-pad: clamp(16px, 5.089vw, 20px);
+  --momento-header-height: 56px;
+  --momento-nav-height: 70px;
+  --momento-safe-top: env(safe-area-inset-top, 0px);
+  --momento-safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  color: var(--momento-ink);
+  /*
+    폰트는 호스트의 index.html이 로드합니다 (README의 "반드시 옮겨야 하는 것" 참고).
+    로드되지 않아도 한글이 깨지지 않도록 시스템 폰트 폴백을 깔아둡니다.
+  */
+  font-family:
+    'Pretendard Variable',
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Apple SD Gothic Neo',
+    'Segoe UI',
+    'Malgun Gothic',
+    sans-serif;
+  font-synthesis: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/*
+  아래 리셋은 모두 :where() 로 감싸 명시도를 0으로 만듭니다. 이유:
+
+  `.momento-root button { font: inherit }` 는 명시도 (0,1,1) 이라서
+  `.item { font-size: 10px }` 같은 CSS Modules 규칙 (0,1,0) 을 이겨버립니다.
+  실제로 이 문제로 하단 내비 라벨이 10px 대신 16px 로 렌더됐습니다.
+  (전역 `button { font: inherit }` 은 (0,0,1) 이라 문제가 없었는데
+   스코프 프리픽스를 붙이면서 명시도가 올라가 승자가 뒤집힌 것)
+
+  :where() 는 명시도에 기여하지 않으므로 컴포넌트 스타일이 항상 이깁니다.
+  호스트 앱 스타일도 이 리셋을 쉽게 덮을 수 있어 합병에도 유리합니다.
+*/
+
+/* 호스트에 리셋이 없어도 레이아웃이 어긋나지 않도록 이 서브트리에만 적용 */
+:where(.momento-root, .momento-root *, .momento-root *::before, .momento-root *::after) {
+  box-sizing: border-box;
+}
+
+:where(.momento-root) :where(button, input) {
+  font: inherit;
+  color: inherit;
+}
+
+:where(.momento-root) :where(button) {
+  cursor: pointer;
+  /* 탭 하이라이트 제거 + 300ms 탭 지연/더블탭 확대 방지 */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+:where(.momento-root) :where(:focus-visible) {
+  outline: 2px solid var(--momento-primary-strong);
+  outline-offset: 2px;
+}

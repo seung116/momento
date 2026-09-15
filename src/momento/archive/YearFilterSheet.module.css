@@ -1,0 +1,70 @@
+/*
+  Figma: BottomSheet / node 5837:6073 (393 x 292)
+  높이는 292px 고정이 아니라 내용 기반 + 상한입니다. 연도 목록이 늘어나도 프레임을 넘지 않습니다.
+  --sheet-radius / handle / shadow 는 공통 BottomSheet 기본값이 Figma 값과 같으므로 override 하지 않습니다.
+*/
+.sheet {
+  --sheet-max-height: 100%;
+}
+
+/* Figma "요소 간 간격 16px" */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.4px;
+  color: #1a1716;
+}
+
+/* 항목 간 간격 16px */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/*
+  Figma 연도 선택 행: 높이 34px, 상하 패딩 4px, 좌우 추가 패딩 없음,
+  왼쪽 텍스트 / 오른쪽 체크 아이콘, 구분선·배경 하이라이트 없음.
+  본문 26px + 상하 4px = 34px 로 맞습니다.
+*/
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 34px;
+  padding: 4px 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #1a1716;
+}
+
+.option span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 아이콘 자리를 항목마다 고정해 선택 여부에 따라 텍스트가 움직이지 않게 합니다. */
+.check {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  color: var(--momento-primary-strong);
+}

@@ -1,0 +1,204 @@
+.tabs {
+  height: 36px;
+  display: flex;
+  background: var(--momento-surface);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(26, 23, 22, 0.06);
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--momento-muted);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 0;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/*
+  `.tabs .tabSelected` 로 자손 형태를 유지해야 합니다.
+  `.tabSelected` 단독(0,1,0)은 위의 `.tabs button`(0,1,1)에 져서
+  background:transparent 가 그대로 적용되고 선택 탭이 칠해지지 않습니다.
+*/
+.tabs .tabSelected {
+  background: var(--momento-primary);
+  color: #fff;
+}
+
+.card {
+  display: flex;
+  gap: 12px;
+  background: var(--momento-surface);
+  padding: var(--momento-card-pad);
+  border-radius: 16px;
+  min-height: 193px;
+}
+
+.compact {
+  min-height: 112px;
+}
+
+.copy {
+  min-width: 0; /* 없으면 긴 제목이 카드 밖으로 밀고 나갑니다 */
+  flex: 1 1 auto;
+}
+
+/*
+  배지 줄바꿈: 좁은 기기에서 '개봉 가능' + 'D-DAY' 두 알약의 폭 합이
+  본문 폭을 넘겨 알약 텍스트가 밖으로 삐져나왔습니다.
+  컨테이너는 wrap, 알약 내부는 nowrap 으로 방어합니다.
+*/
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin-bottom: 8px;
+}
+
+.badge {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.stateOpenable {
+  color: #2a5a3c;
+  background: #f1f8f2;
+}
+
+.stateSealed {
+  color: #5b4c9c;
+  background: #f2f1f9;
+}
+
+.stateWriting {
+  color: #8a5a16;
+  background: #fffbeb;
+}
+
+.dday {
+  color: #fff;
+  background: var(--momento-primary-strong);
+}
+
+.copy h3 {
+  font-size: 16px;
+  line-height: 1.2;
+  margin: 0 0 4px;
+  /* 한글은 단어 중간에서 끊지 않고, 아주 긴 영문/URL은 강제로 줄바꿈 */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.copy p {
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0 0 8px;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.copy small {
+  font-size: 13px;
+  color: var(--momento-muted);
+}
+
+/*
+  고정 104px 대신 콘텐츠 기준 최소폭.
+  좁은 기기에서는 본문에 폭을 더 내주고, 넓은 기기에서는 늘어난 폭이 본문으로 갑니다.
+*/
+.side {
+  flex: 0 0 auto;
+  min-width: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.compact .side {
+  justify-content: center;
+  gap: 10px;
+}
+
+.side button {
+  border: 0;
+  background: var(--momento-primary);
+  color: #fff;
+  border-radius: 8px;
+  padding: 9px 13px;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.people {
+  height: 30px;
+  display: flex;
+}
+
+.people i,
+.people b {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin-left: -7px;
+  border: 2px solid #fff;
+  background: #efedf7;
+  color: var(--momento-primary-strong);
+  font-style: normal;
+  font-size: 10px;
+}
+
+/* 첫 아바타의 음수 마진 때문에 그룹 전체가 7px 밀려 있던 것 보정 */
+.people i:first-child {
+  margin-left: 0;
+}
+
+.people b {
+  background: #f4f4f5;
+  color: var(--momento-muted);
+}
+
+/* 좁은 기기 (~359px: iPhone SE, 일부 360dp 안드로이드) */
+@media (max-width: 359px) {
+  .card {
+    gap: 8px;
+  }
+
+  .side {
+    min-width: 84px;
+  }
+
+  .side button {
+    padding: 9px 10px;
+  }
+
+  .tabs button {
+    font-size: 12px;
+  }
+}
+
+/* 기준보다 낮은 기기 (~700px 높이): 한 화면에 들어오는 항목 수를 유지 */
+@media (max-height: 700px) {
+  .card {
+    min-height: 172px;
+  }
+
+  .tabs {
+    margin-bottom: 14px;
+  }
+}
