@@ -7,9 +7,9 @@ import { YearToolbar } from '../ui/YearToolbar.jsx'
 import { EmptyState, YearSection } from '../ui/YearSection.jsx'
 import { groupByYear, matchesQuery, yearsOf } from '../lib/list.js'
 import { ROUTES } from '../routes.js'
+import { ALL_YEARS, YearFilterSheet, yearButtonLabel } from '../ui/YearFilterSheet.jsx'
 import { archives as defaultArchives } from './archiveData.js'
 import { ArchiveCard } from './ArchiveCard.jsx'
-import { ALL_YEARS, YearFilterSheet, yearButtonLabel } from './YearFilterSheet.jsx'
 import styles from './archive.module.css'
 
 /**

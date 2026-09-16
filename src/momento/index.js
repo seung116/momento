@@ -27,6 +27,7 @@ export { BottomNav, DEFAULT_NAV_ITEMS } from './shell/BottomNav.jsx'
 
 // 공통 바텀시트. 다른 화면에서도 재사용하세요.
 export { BottomSheet } from './ui/BottomSheet.jsx'
+export { ALL_YEARS, YearFilterSheet, yearButtonLabel } from './ui/YearFilterSheet.jsx'
 
 // 목업 데이터. 실제 데이터로 교체하면 import를 지우면 됩니다.
 export { capsules, CAPSULE_TABS } from './capsule/capsuleData.js'

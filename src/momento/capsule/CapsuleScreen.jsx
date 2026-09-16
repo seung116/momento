@@ -5,7 +5,8 @@ import { Fab } from '../ui/Fab.jsx'
 import { SearchSheet } from '../ui/SearchSheet.jsx'
 import { YearToolbar } from '../ui/YearToolbar.jsx'
 import { EmptyState, YearSection } from '../ui/YearSection.jsx'
-import { groupByYear, matchesQuery } from '../lib/list.js'
+import { ALL_YEARS, YearFilterSheet, yearButtonLabel } from '../ui/YearFilterSheet.jsx'
+import { groupByYear, matchesQuery, yearsOf } from '../lib/list.js'
 import { ROUTES } from '../routes.js'
 import { ALL_TAB, CAPSULE_TABS, capsules as defaultCapsules } from './capsuleData.js'
 import { CapsuleCard } from './CapsuleCard.jsx'
@@ -39,15 +40,37 @@ export function CapsuleScreen({
   const [compact, setCompact] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
+  // 연도 필터 상태는 이 화면이 소유합니다. (아카이브 화면과 동일한 방식)
+  const [selectedYear, setSelectedYear] = useState(ALL_YEARS)
+  const [yearSheetOpen, setYearSheetOpen] = useState(false)
 
-  // SearchSheet의 키 리스너가 매 렌더마다 재등록되지 않도록 안정된 참조를 넘깁니다.
+  // 시트의 키 리스너가 매 렌더마다 재등록되지 않도록 안정된 참조를 넘깁니다.
   const closeSearch = useCallback(() => setSearchOpen(false), [])
+  const closeYearSheet = useCallback(() => setYearSheetOpen(false), [])
+
+  /*
+    시트에 보여줄 연도 목록. 데이터에서 중복 제거 후 최신순.
+    탭이나 검색어와 무관하게 전체 데이터 기준입니다. 탭을 바꿀 때마다 목록이 늘었다 줄면
+    선택 대상이 사라져 혼란스럽기 때문입니다. (교차 결과가 비면 빈 상태 UI가 나옵니다)
+  */
+  const years = useMemo(() => yearsOf(items), [items])
 
   const groups = useMemo(() => {
     const q = query.trim().toLowerCase()
-    const filtered = items.filter((item) => (tab === ALL_TAB || item.state === tab) && matchesQuery(item, q))
+    const filtered = items.filter(
+      (item) =>
+        (tab === ALL_TAB || item.state === tab) &&
+        (selectedYear === ALL_YEARS || item.year === selectedYear) &&
+        matchesQuery(item, q),
+    )
     return groupByYear(filtered)
-  }, [items, tab, query])
+  }, [items, tab, query, selectedYear])
+
+  // 연도를 고르면 시트를 닫습니다.
+  const selectYear = useCallback((value) => {
+    setSelectedYear(value)
+    setYearSheetOpen(false)
+  }, [])
 
   return (
     <PhoneShell
@@ -63,7 +86,22 @@ export function CapsuleScreen({
         />
       }
       overlay={
-        <SearchSheet open={searchOpen} title="타임캡슐" query={query} onQueryChange={setQuery} onClose={closeSearch} />
+        <>
+          <SearchSheet
+            open={searchOpen}
+            title="타임캡슐"
+            query={query}
+            onQueryChange={setQuery}
+            onClose={closeSearch}
+          />
+          <YearFilterSheet
+            open={yearSheetOpen}
+            onClose={closeYearSheet}
+            years={years}
+            selected={selectedYear}
+            onSelect={selectYear}
+          />
+        </>
       }
     >
       <div className={styles.tabs} role="group" aria-label="상태별 필터">
@@ -85,6 +123,9 @@ export function CapsuleScreen({
         searching={searchOpen}
         compact={compact}
         onCompactChange={setCompact}
+        yearLabel={yearButtonLabel(selectedYear)}
+        onYearClick={() => setYearSheetOpen(true)}
+        yearSheetOpen={yearSheetOpen}
       />
 
       {groups.length === 0 ? (

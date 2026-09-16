@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react'
 import { Check } from 'lucide-react'
-import { BottomSheet } from '../ui/BottomSheet.jsx'
+import { BottomSheet } from './BottomSheet.jsx'
 import styles from './YearFilterSheet.module.css'
 
 export const ALL_YEARS = 'all'
@@ -11,8 +11,9 @@ export function yearButtonLabel(selectedYear) {
 }
 
 /**
- * 아카이브 연도 선택 바텀시트. Figma BottomSheet / 5837:6073
+ * 연도 선택 바텀시트. Figma BottomSheet / 5837:6073
  *
+ * 아카이브와 타임캡슐 두 화면이 같은 컴포넌트를 씁니다.
  * 연도 목록은 하드코딩하지 않고 호출부에서 데이터로부터 만들어 넘깁니다.
  *
  * @param {object}   props
@@ -21,8 +22,9 @@ export function yearButtonLabel(selectedYear) {
  * @param {number[]} props.years          내림차순 연도 목록
  * @param {number|'all'} props.selected
  * @param {Function} props.onSelect       (year|'all') => void
+ * @param {string}   [props.title]        시트 제목. 기본값은 Figma 문구
  */
-export function YearFilterSheet({ open, onClose, years, selected, onSelect }) {
+export function YearFilterSheet({ open, onClose, years, selected, onSelect, title = '언제 저장한 추억을 볼까요' }) {
   const options = [{ value: ALL_YEARS, label: '전체 기간' }, ...years.map((y) => ({ value: y, label: `${y}년` }))]
   const groupRef = useRef(null)
 
@@ -68,7 +70,7 @@ export function YearFilterSheet({ open, onClose, years, selected, onSelect }) {
   return (
     <BottomSheet open={open} onClose={onClose} label="기간 선택" className={styles.sheet}>
       <div className={styles.body}>
-        <h2 className={styles.title}>언제 저장한 추억을 볼까요</h2>
+        <h2 className={styles.title}>{title}</h2>
         <div
           className={styles.options}
           role="radiogroup"

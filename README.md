@@ -33,8 +33,9 @@ src/momento/
   routes.js           라우트 키 상수 — 3명이 공유해야 하는 유일한 값
   momento.css         디자인 토큰 + .momento-root 하위로 스코프된 리셋
   lib/list.js         연도 그룹화 / 검색 필터
-  shell/              PhoneShell(393x852 셸), BottomNav
-  ui/                 Fab, YearToolbar, SearchSheet, YearSection/EmptyState
+  shell/              PhoneShell(393x852 셸), BottomNav, ShellScrollContext
+  ui/                 BottomSheet(공통), SearchSheet, YearFilterSheet,
+                      Fab, YearToolbar, YearSection/EmptyState
   capsule/            CapsuleScreen, CapsuleCard, capsuleData
   archive/            ArchiveScreen, ArchiveCard, archiveData
 ```
